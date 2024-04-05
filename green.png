@@ -1,0 +1,106 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+struct Hocsinh{
+	string ID;
+	string ho_ten;
+	int nam_sinh;
+	string lop;
+	float diem_tk;
+};
+
+struct Node{
+	Hocsinh data;
+	Node *next;
+};
+Node *makenode(string a, string b, int c, string d, float e){
+	Node *p=new Node();
+	p->data.ID=a;
+	p->data.ho_ten=b;
+	p->data.nam_sinh=c;
+	p->data.lop=d;
+	p->data.diem_tk=e;
+	p->next=NULL;
+	return p;
+}
+
+
+//them vao cuoi danh sach
+void addNode(Node*&phead,string a, string b, int c, string d, float e){
+	Node* x=phead;
+	if(phead==NULL){
+		Node* p=makenode(a,b,c,d,e);
+		p->next=phead;
+		phead=p;
+	}
+	else{
+		Node* p=makenode(a,b,c,d,e);
+		while(x->next!=NULL){
+			x=x->next;
+		}
+		x->next=p;
+	}
+}
+void duyet(Node *phead){
+	while(phead!=NULL){
+		cout<<"ID: "<<phead->data.ID<<", Hoten:"<<phead->data.ho_ten<<", Namsinh:"<<phead->data.nam_sinh<<", Lop:"<<phead->data.lop<<", Diem tk: "<<phead->data.diem_tk<<endl;
+		phead=phead->next;
+	}
+}
+
+void maxdiem(Node *phead){
+	Node *max=phead;
+	float diem_max=phead->data.diem_tk;
+	while(phead!=NULL){
+		if(phead->data.diem_tk > diem_max){
+			max=phead;
+			diem_max=phead->data.diem_tk;
+		}
+		phead=phead->next;
+	}
+	cout << "Thong tin hoc sinh co diem tong ket lon nhat:\n";
+    cout << "ID: " << max->data.ID << ", Ho ten: " << max->data.ho_ten << ", Nam sinh: " << max->data.nam_sinh << ", Lop: " << max->data.lop << ", Diem tk: " << max->data.diem_tk << endl;
+
+}
+
+// chen vao dau danh sach
+void chenDau(Node*&phead,string a, string b, int c, string d, float e){
+	Node *newnode=makenode(a,b,c,d,e);
+	newnode->next=phead;
+	phead=newnode;
+}
+
+int main(){
+	Node* phead=NULL;
+	string a,b,d; int c; float e;
+	int n;
+	cout<<"Nhap so hoc sinh can dien thong tin:"; cin>>n;
+	for(int i=0;i<n;i++){
+		cout<<"Nhap thong tin hoc sinh thu "<<i+1<<" :"<<endl;
+		cin.ignore();
+		cout<<"Nhap ID: ";getline(cin,a);
+		cout<<"Nhap ho ten: ";getline(cin,b);
+		cout<<"Nhap nam sinh: ";cin>>c; cin.ignore();
+		cout<<"Nhap lop: ";getline(cin,d);
+		cout<<"Nhap diem tong ket: "; cin>>e;
+		addNode(phead,a,b,c,d,e);
+	}
+	cout<<"---------------------------------------------"<<endl;
+	duyet(phead);
+	cout<<"---------------------------------------------"<<endl;
+	maxdiem(phead);
+	cout<<"---------------------------------------------"<<endl;
+	for(int i=0;i<1;i++){
+		cout<<"Nhap thong tin hoc sinh moi :"<<endl;
+		cin.ignore();
+		cout<<"Nhap ID: ";getline(cin,a);
+		cout<<"Nhap ho ten: ";getline(cin,b);
+		cout<<"Nhap nam sinh: ";cin>>c; cin.ignore();
+		cout<<"Nhap lop: ";getline(cin,d);
+		cout<<"Nhap diem tong ket: "; cin>>e;
+		chenDau(phead,a,b,c,d,e);
+	}
+	duyet(phead);
+	return 0;
+}

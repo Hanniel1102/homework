@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang web bán sách</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+}
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 60%;
+}
+.book {
+    width: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.book img {
+    width: 150px;
+    height: 200px;
+    border-radius: 5px;
+}
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+button:hover {
+    background-color: #555;
+}
+.cart {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.cart h2 {
+    margin-top: 0;
+}
+#cart-items {
+    list-style-type: none;
+    padding: 0;
+}
+#cart-items li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+#total {
+    font-weight: bold;
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>Hanniel Book Store Online</h1>
+    <h2>Name: Mai Văn Hoàng</h2>
+    <h2>ID: 22810310128</h2>
+    <h2>Lab 3: Thực hành ngày 4/5/2024</h2>
+</header>
+<main>
+    <div class="book-list">
+        <div class="book" id="book1">
+            <img src=https://sachviet.eu/wp-content/uploads/2022/04/bia-1_ma-dao-to-su-_tap-1__cd54fd7d48ef4463ad25f28e67787eb5_master.jpg alt="Book 1">
+            <h2>Ma Đạo Tổ Sư I</h2>
+            <p id="price1">Giá: $10</p>
+            <button onclick="addToCart('book1')">Thêm vào giỏ hàng</button>
+        </div>
+        <div class="book" id="book2">
+            <img src=https://sachviet.eu/wp-content/uploads/2022/04/bia-1_ma-dao-to-su-_tap-2__cdf9324a0a6b4534b32cece6821df0d0_master.jpg alt="Book 2">
+            <h2>Ma Đạo Tổ Sư II</h2>
+            <p id="price2">Giá: $12</p>
+            <button onclick="addToCart('book2')">Thêm vào giỏ hàng</button>
+        </div>
+        <div class="book" id="book3">
+            <img src=https://sachviet.eu/wp-content/uploads/2022/04/bia-1_ma-dao-to-su_tap-3-phien-ban-thuong_e8072035584842b794eb6660e936ed46_master-768x1079.jpg alt="Book 3">
+            <h2>Ma Đạo Tổ Sư III</h2>
+            <p id="price3">Giá: $14</p>
+            <button onclick="addToCart('book3')">Thêm vào giỏ hàng</button>
+        </div>
+        <div class="book" id="book4">
+            <img src=https://cdn0.fahasa.com/media/catalog/product/b/i/bia_1_ma_dao_to_su_tap_4_tb2021.jpg?_gl=1*fezf7g*_ga*NjI3NTQwMTkzLjE3MTIzMTgyMjM.*_ga_460L9JMC2G*MTcxMjMxODIyMi4xLjAuMTcxMjMxODIyMi42MC4wLjI5MzgwNjk2NA..*_gcl_au*MTMyOTc4Ny4xNzEyMzE4MjIz alt="Book 4">
+            <h2>Ma Đạo Tổ Sư IV</h2>
+            <p id="price4">Giá: $16</p>
+            <button onclick="addToCart('book4')">Thêm vào giỏ hàng</button>
+        </div>
+    </div>
+    <div class="cart">
+        <h2>Giỏ hàng</h2>
+        <ul id="cart-items"></ul>
+        <p id="total">Tổng tiền: $0</p>
+    </div>
+</main>
+</body>
+<script>
+    let cart = [];
+    let prices = {
+        'book1': 10,
+        'book2': 12,
+        'book3': 14,
+        'book4': 16
+    };
+
+function addToCart(bookId) {
+    let book = document.getElementById(bookId);
+    let bookTitle = book.querySelector('h2').innerText;
+    let bookPrice = prices[bookId];
+    cart.push({title: bookTitle, price: bookPrice});
+    updateCart();
+}
+
+function updateCart() {
+    let cartItems = document.getElementById('cart-items');
+    let total = 0;
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+        let li = document.createElement('li');
+        li.innerText = `${item.title} - $${item.price.toFixed(2)}`; // Định dạng giá tiền với hai chữ số sau dấu thập phân
+        cartItems.appendChild(li);
+        total += item.price;
+    });
+    document.getElementById('total').innerText = `Tổng tiền: $${total.toFixed(2)}`; // Định dạng tổng tiền với hai chữ số sau dấu thập phân
+}
+</script>
+</html>
